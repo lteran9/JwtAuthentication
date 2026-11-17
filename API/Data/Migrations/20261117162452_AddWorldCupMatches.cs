@@ -1,0 +1,41 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace API.Data.Migrations
+{
+    /// <inheritdoc />
+    public partial class AddWorldCupMatches : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "WorldCupMatches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MatchDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    HomeTeam = table.Column<string>(type: "TEXT", nullable: false),
+                    AwayTeam = table.Column<string>(type: "TEXT", nullable: false),
+                    HomeScore = table.Column<int>(type: "INTEGER", nullable: false),
+                    AwayScore = table.Column<int>(type: "INTEGER", nullable: false),
+                    City = table.Column<string>(type: "TEXT", nullable: false),
+                    Country = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorldCupMatches", x => x.Id);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "WorldCupMatches");
+        }
+    }
+}
