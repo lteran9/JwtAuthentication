@@ -48,6 +48,9 @@ namespace API.Data.Migrations
                     b.Property<DateOnly>("MatchDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PenaltyWinner")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("WorldCupMatches");

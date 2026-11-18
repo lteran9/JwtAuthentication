@@ -12,12 +12,29 @@ public static class WorldCupSeeder
 
     public static async Task SeedAsync(AppDbContext db, CancellationToken cancellationToken = default)
     {
-        if (await db.WorldCupMatches.AnyAsync(cancellationToken))
+        var matches = ReadMatches();
+
+        if (!await db.WorldCupMatches.AnyAsync(cancellationToken))
         {
+            db.WorldCupMatches.AddRange(matches);
+            await db.SaveChangesAsync(cancellationToken);
             return;
         }
 
-        db.WorldCupMatches.AddRange(ReadMatches());
+        var existingMatches = await db.WorldCupMatches.ToListAsync(cancellationToken);
+        foreach (var existingMatch in existingMatches)
+        {
+            var seededMatch = matches.FirstOrDefault(match =>
+                match.MatchDate == existingMatch.MatchDate &&
+                match.HomeTeam == existingMatch.HomeTeam &&
+                match.AwayTeam == existingMatch.AwayTeam);
+
+            if (seededMatch is not null)
+            {
+                existingMatch.PenaltyWinner = seededMatch.PenaltyWinner;
+            }
+        }
+
         await db.SaveChangesAsync(cancellationToken);
     }
 
@@ -45,6 +62,9 @@ public static class WorldCupSeeder
                 AwayTeam = fields[columns["away_team"]],
                 HomeScore = int.Parse(fields[columns["home_score"]], CultureInfo.InvariantCulture),
                 AwayScore = int.Parse(fields[columns["away_score"]], CultureInfo.InvariantCulture),
+                PenaltyWinner = string.IsNullOrWhiteSpace(fields[columns["penalty_winner"]])
+                    ? null
+                    : fields[columns["penalty_winner"]],
                 City = fields[columns["city"]],
                 Country = fields[columns["country"]]
             });

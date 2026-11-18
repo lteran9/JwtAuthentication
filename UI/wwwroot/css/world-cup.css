@@ -1,0 +1,261 @@
+.world-cup-cup + .world-cup-cup {
+  margin-top: 2rem;
+}
+
+.world-cup-cup__title {
+  border-bottom: 1px solid var(--bs-border-color);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+
+.world-cup-match-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.world-cup-match {
+  align-items: center;
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.65rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  padding: 0.85rem 1rem;
+}
+
+.world-cup-match__context {
+  color: var(--bs-secondary-color);
+  display: flex;
+  font-size: 0.875rem;
+  gap: 0.2rem;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+}
+
+.world-cup-match__context time {
+  color: var(--bs-emphasis-color);
+  font-weight: 600;
+}
+
+.world-cup-match__team {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.world-cup-match__team--away {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+.world-cup-match__team--home {
+  grid-column: 1;
+}
+
+.world-cup-match__role {
+  color: var(--bs-secondary-color);
+  flex: 0 0 2.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.world-cup-match__team--away .world-cup-match__role {
+  text-align: right;
+}
+
+.world-cup-match__name {
+  align-items: center;
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.45rem;
+  color: var(--bs-emphasis-color);
+  display: inline-flex;
+  gap: 0.55rem;
+  min-width: 0;
+  overflow-wrap: break-word;
+  padding: 0.4rem 0.65rem;
+  --team-primary: #6ea8fe;
+  --team-secondary: #e9ecef;
+}
+
+.world-cup-match__name::before {
+  align-self: stretch;
+  background: linear-gradient(
+    to bottom,
+    var(--team-primary) 0%,
+    var(--team-primary) 50%,
+    var(--team-secondary) 50%,
+    var(--team-secondary) 100%
+  );
+  border-radius: 0.15rem;
+  content: "";
+  flex: 0 0 0.45rem;
+  min-height: 1.4rem;
+}
+
+.world-cup-match__name--winner {
+  border-color: var(--bs-success);
+  box-shadow: 0 0 0 0.125rem rgba(var(--bs-success-rgb), 0.18);
+  font-weight: 700;
+}
+
+.world-cup-match__winner-badge {
+  background-color: var(--bs-success);
+  border-radius: 999px;
+  color: var(--bs-white);
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.45rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.world-cup-match__team--away .world-cup-match__winner-badge {
+  order: -1;
+}
+
+.world-cup-match__score {
+  align-items: center;
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.45rem;
+  display: flex;
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  gap: 0.35rem;
+  justify-content: center;
+  min-width: 4.25rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.world-cup-match__penalty-winner {
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.world-cup-match__name[data-team="Algeria"] { --team-primary: #006233; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Angola"] { --team-primary: #cc092f; --team-secondary: #000000; }
+.world-cup-match__name[data-team="Argentina"] { --team-primary: #74acdf; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Australia"] { --team-primary: #012169; --team-secondary: #e4002b; }
+.world-cup-match__name[data-team="Austria"] { --team-primary: #ed2939; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Belgium"] { --team-primary: #000000; --team-secondary: #fae042; }
+.world-cup-match__name[data-team="Bolivia"] { --team-primary: #d52b1e; --team-secondary: #f9e300; }
+.world-cup-match__name[data-team="Bosnia and Herzegovina"] { --team-primary: #002395; --team-secondary: #fecb00; }
+.world-cup-match__name[data-team="Brazil"] { --team-primary: #009739; --team-secondary: #ffdf00; }
+.world-cup-match__name[data-team="Bulgaria"] { --team-primary: #ffffff; --team-secondary: #00966e; }
+.world-cup-match__name[data-team="Cameroon"] { --team-primary: #007a5e; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="Canada"] { --team-primary: #d80621; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Cape Verde"] { --team-primary: #003893; --team-secondary: #cf2027; }
+.world-cup-match__name[data-team="Chile"] { --team-primary: #d52b1e; --team-secondary: #0039a6; }
+.world-cup-match__name[data-team="China"] { --team-primary: #de2910; --team-secondary: #ffde00; }
+.world-cup-match__name[data-team="Colombia"] { --team-primary: #fcd116; --team-secondary: #003893; }
+.world-cup-match__name[data-team="Costa Rica"] { --team-primary: #002b7f; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="Croatia"] { --team-primary: #ff0000; --team-secondary: #171796; }
+.world-cup-match__name[data-team="Cuba"] { --team-primary: #002a8f; --team-secondary: #cf142b; }
+.world-cup-match__name[data-team="Curaçao"] { --team-primary: #002b7f; --team-secondary: #f9e300; }
+.world-cup-match__name[data-team="Czech Republic"] { --team-primary: #d7141a; --team-secondary: #11457e; }
+.world-cup-match__name[data-team="Czechoslovakia"] { --team-primary: #11457e; --team-secondary: #d7141a; }
+.world-cup-match__name[data-team="DR Congo"] { --team-primary: #007fff; --team-secondary: #ce1021; }
+.world-cup-match__name[data-team="Denmark"] { --team-primary: #c60c30; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Ecuador"] { --team-primary: #ffdd00; --team-secondary: #034ea2; }
+.world-cup-match__name[data-team="Egypt"] { --team-primary: #ce1126; --team-secondary: #000000; }
+.world-cup-match__name[data-team="El Salvador"] { --team-primary: #0f47af; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="England"] { --team-primary: #ce1124; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="France"] { --team-primary: #0055a4; --team-secondary: #ef4135; }
+.world-cup-match__name[data-team="German DR"] { --team-primary: #000000; --team-secondary: #dd0000; }
+.world-cup-match__name[data-team="Germany"] { --team-primary: #000000; --team-secondary: #ffce00; }
+.world-cup-match__name[data-team="Ghana"] { --team-primary: #ce1126; --team-secondary: #fcd116; }
+.world-cup-match__name[data-team="Greece"] { --team-primary: #0d5eaf; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Haiti"] { --team-primary: #00209f; --team-secondary: #d21034; }
+.world-cup-match__name[data-team="Honduras"] { --team-primary: #0073cf; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Hungary"] { --team-primary: #cd2a3e; --team-secondary: #436f4d; }
+.world-cup-match__name[data-team="Iceland"] { --team-primary: #003897; --team-secondary: #d72828; }
+.world-cup-match__name[data-team="Indonesia"] { --team-primary: #ce1126; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Iran"] { --team-primary: #239f40; --team-secondary: #da0000; }
+.world-cup-match__name[data-team="Iraq"] { --team-primary: #ce1126; --team-secondary: #000000; }
+.world-cup-match__name[data-team="Israel"] { --team-primary: #0038b8; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Italy"] { --team-primary: #009246; --team-secondary: #ce2b37; }
+.world-cup-match__name[data-team="Ivory Coast"] { --team-primary: #f77f00; --team-secondary: #009a44; }
+.world-cup-match__name[data-team="Jamaica"] { --team-primary: #009b3a; --team-secondary: #fed100; }
+.world-cup-match__name[data-team="Japan"] { --team-primary: #bc002d; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Jordan"] { --team-primary: #000000; --team-secondary: #007a3d; }
+.world-cup-match__name[data-team="Kuwait"] { --team-primary: #007a3d; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="Mexico"] { --team-primary: #006847; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="Morocco"] { --team-primary: #c1272d; --team-secondary: #006233; }
+.world-cup-match__name[data-team="Netherlands"] { --team-primary: #ae1c28; --team-secondary: #21468b; }
+.world-cup-match__name[data-team="New Zealand"] { --team-primary: #00247d; --team-secondary: #cc142b; }
+.world-cup-match__name[data-team="Nigeria"] { --team-primary: #008751; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="North Korea"] { --team-primary: #ed1c27; --team-secondary: #024fa2; }
+.world-cup-match__name[data-team="Northern Ireland"] { --team-primary: #d21034; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Norway"] { --team-primary: #ba0c2f; --team-secondary: #00205b; }
+.world-cup-match__name[data-team="Panama"] { --team-primary: #da121a; --team-secondary: #072357; }
+.world-cup-match__name[data-team="Paraguay"] { --team-primary: #d52b1e; --team-secondary: #0038a8; }
+.world-cup-match__name[data-team="Peru"] { --team-primary: #d91023; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Poland"] { --team-primary: #dc143c; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Portugal"] { --team-primary: #006600; --team-secondary: #ff0000; }
+.world-cup-match__name[data-team="Qatar"] { --team-primary: #8a1538; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Republic of Ireland"] { --team-primary: #169b62; --team-secondary: #ff883e; }
+.world-cup-match__name[data-team="Romania"] { --team-primary: #002b7f; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="Russia"] { --team-primary: #0039a6; --team-secondary: #d52b1e; }
+.world-cup-match__name[data-team="Saudi Arabia"] { --team-primary: #006c35; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Scotland"] { --team-primary: #0065bd; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Senegal"] { --team-primary: #00853f; --team-secondary: #fdef42; }
+.world-cup-match__name[data-team="Serbia"] { --team-primary: #c6363c; --team-secondary: #0c4076; }
+.world-cup-match__name[data-team="Slovakia"] { --team-primary: #0b4ea2; --team-secondary: #ee1c25; }
+.world-cup-match__name[data-team="Slovenia"] { --team-primary: #005da4; --team-secondary: #ed1c24; }
+.world-cup-match__name[data-team="South Africa"] { --team-primary: #007a4d; --team-secondary: #de3831; }
+.world-cup-match__name[data-team="South Korea"] { --team-primary: #cd2e3a; --team-secondary: #0047a0; }
+.world-cup-match__name[data-team="Spain"] { --team-primary: #aa151b; --team-secondary: #f1bf00; }
+.world-cup-match__name[data-team="Sweden"] { --team-primary: #006aa7; --team-secondary: #fecc00; }
+.world-cup-match__name[data-team="Switzerland"] { --team-primary: #d52b1e; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Togo"] { --team-primary: #006a4e; --team-secondary: #d21034; }
+.world-cup-match__name[data-team="Trinidad and Tobago"] { --team-primary: #ce1126; --team-secondary: #000000; }
+.world-cup-match__name[data-team="Tunisia"] { --team-primary: #e70013; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Turkey"] { --team-primary: #e30a17; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Ukraine"] { --team-primary: #0057b7; --team-secondary: #ffd700; }
+.world-cup-match__name[data-team="United Arab Emirates"] { --team-primary: #00732f; --team-secondary: #ce1126; }
+.world-cup-match__name[data-team="United States"] { --team-primary: #b22234; --team-secondary: #3c3b6e; }
+.world-cup-match__name[data-team="Uruguay"] { --team-primary: #0038a8; --team-secondary: #ffffff; }
+.world-cup-match__name[data-team="Uzbekistan"] { --team-primary: #0099b5; --team-secondary: #1eb53a; }
+.world-cup-match__name[data-team="Wales"] { --team-primary: #d30731; --team-secondary: #00ab39; }
+.world-cup-match__name[data-team="Yugoslavia"] { --team-primary: #0c4076; --team-secondary: #d52b1e; }
+
+@media (max-width: 767.98px) {
+  .world-cup-match {
+    gap: 0.65rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .world-cup-match__context {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+  }
+
+  .world-cup-match__team--home,
+  .world-cup-match__team--away {
+    grid-column: 1;
+    justify-content: flex-start;
+  }
+
+  .world-cup-match__team--away {
+    flex-direction: row-reverse;
+  }
+
+  .world-cup-match__team--away .world-cup-match__role {
+    text-align: left;
+  }
+
+  .world-cup-match__score {
+    grid-column: 2;
+    grid-row: 2 / 4;
+  }
+}

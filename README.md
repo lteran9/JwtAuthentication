@@ -51,14 +51,18 @@ The Compose setup runs both apps in Development so the API applies pending EF Co
 
 ## World Cup results
 
-`GET /world-cup/matches` returns FIFA World Cup matches from 1930 onward, newest first. Both query parameters are optional:
+`GET /world-cup/matches` returns one page of FIFA World Cup matches from 1930 onward, newest first. The response includes the current page, page size, total match count, and matches. Pagination defaults to 25 results per page and is capped at 100. Query parameters:
 
-- `year`: a tournament year from 1930 to the current year. Other values return `400`.
-- `team`: a team name, case-insensitive. It matches the team as either home or away.
+- `year` (optional): a tournament year from 1930 to the current year. Other values return `400`.
+- `team` (optional): a team name, case-insensitive. It matches the team as either home or away.
+- `page` (optional): a 1-based page number. Must be at least `1`.
+- `pageSize` (optional): results per page, from `1` to `100`.
 
 The endpoint requires a token, so the UI forwards the access token from its cookie. The UI page is at `/WorldCup`.
 
 The data is [API/Data/Seed/worldcup_matches.csv](/Users/lteran/Documents/Workspace/dotNet/PracticalScenarios/JwtAuthentication/API/Data/Seed/worldcup_matches.csv), a FIFA World Cup subset of [martj42/international_results](https://github.com/martj42/international_results) (CC0 1.0). It is embedded in the API and loaded into SQLite at startup in Development, only when the table is empty.
+
+The CSV also records the winner of a penalty shootout in `penalty_winner`. The historical winners come from the source dataset's [shootouts.csv](https://github.com/martj42/international_results/blob/master/shootouts.csv). The field is empty for matches that did not go to penalties.
 
 ## Running tests
 

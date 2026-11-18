@@ -8,6 +8,7 @@ public class WorldCupMatch
     public required string AwayTeam { get; set; }
     public int HomeScore { get; set; }
     public int AwayScore { get; set; }
+    public string? PenaltyWinner { get; set; }
     public required string City { get; set; }
     public required string Country { get; set; }
 }
