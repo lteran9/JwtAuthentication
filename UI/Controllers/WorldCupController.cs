@@ -29,7 +29,7 @@ public class WorldCupController(ApiClient apiClient) : Controller
 
         if (page < 1)
         {
-            ModelState.AddModelError(nameof(page), "Page number must be 1 or greater.");
+ModelState.AddModelError(string.Empty, "Page number must be 1 or greater.");
             return View(model);
         }
 
