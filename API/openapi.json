@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost:7221/"
+      "url": "http://127.0.0.1:5089/"
     }
   ],
   "paths": {
@@ -115,6 +115,36 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32",
+              "default": 25
+            }
           }
         ],
         "responses": {
@@ -123,26 +153,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WorldCupMatchDto"
-                  }
+                  "$ref": "#/components/schemas/WorldCupMatchesPageDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WorldCupMatchDto"
-                  }
+                  "$ref": "#/components/schemas/WorldCupMatchesPageDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WorldCupMatchDto"
-                  }
+                  "$ref": "#/components/schemas/WorldCupMatchesPageDto"
                 }
               }
             }
@@ -206,6 +227,7 @@
           "homeScore",
           "awayTeam",
           "awayScore",
+          "penaltyWinner",
           "city",
           "country"
         ],
@@ -237,11 +259,58 @@
             ],
             "format": "int32"
           },
+          "penaltyWinner": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
           "city": {
             "type": "string"
           },
           "country": {
             "type": "string"
+          }
+        }
+      },
+      "WorldCupMatchesPageDto": {
+        "required": [
+          "page",
+          "pageSize",
+          "totalCount",
+          "matches"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorldCupMatchDto"
+            }
           }
         }
       }

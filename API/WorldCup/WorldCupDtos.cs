@@ -6,5 +6,13 @@ public sealed record WorldCupMatchDto(
     int HomeScore,
     string AwayTeam,
     int AwayScore,
+    string? PenaltyWinner,
     string City,
     string Country);
+
+/// <summary>A page of World Cup match results and its pagination metadata.</summary>
+public sealed record WorldCupMatchesPageDto(
+    int Page,
+    int PageSize,
+    int TotalCount,
+    IReadOnlyList<WorldCupMatchDto> Matches);

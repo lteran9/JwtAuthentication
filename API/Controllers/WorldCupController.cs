@@ -1,5 +1,6 @@
 using API.Data;
 using API.WorldCup;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ public class WorldCupController(AppDbContext db) : ControllerBase
     private const int FirstWorldCupYear = 1930;
 
     [HttpGet("matches")]
-    public async Task<ActionResult<IReadOnlyList<WorldCupMatchDto>>> GetMatches(
+    public async Task<ActionResult<WorldCupMatchesPageDto>> GetMatches(
         [FromQuery] int? year,
         [FromQuery] string? team,
-        CancellationToken cancellationToken)
+        [FromQuery, Range(1, int.MaxValue)] int page = 1,
+        [FromQuery, Range(1, 100)] int pageSize = 25,
+        CancellationToken cancellationToken = default)
     {
         var lastYear = DateTime.UtcNow.Year;
         if (year is { } requestedYear && (requestedYear < FirstWorldCupYear || requestedYear > lastYear))
@@ -43,17 +46,29 @@ public class WorldCupController(AppDbContext db) : ControllerBase
                 match.HomeTeam.ToLower() == teamName || match.AwayTeam.ToLower() == teamName);
         }
 
-        return await matches
-            .OrderByDescending(match => match.MatchDate)
-            .ThenBy(match => match.Id)
-            .Select(match => new WorldCupMatchDto(
-                match.MatchDate,
-                match.HomeTeam,
-                match.HomeScore,
-                match.AwayTeam,
-                match.AwayScore,
-                match.City,
-                match.Country))
-            .ToListAsync(cancellationToken);
+        var totalCount = await matches.CountAsync(cancellationToken);
+        var offset = (long)(page - 1) * pageSize;
+        IReadOnlyList<WorldCupMatchDto> pageMatches = [];
+
+        if (offset < totalCount)
+        {
+            pageMatches = await matches
+                .OrderByDescending(match => match.MatchDate)
+                .ThenBy(match => match.Id)
+                .Skip((int)offset)
+                .Take(pageSize)
+                .Select(match => new WorldCupMatchDto(
+                    match.MatchDate,
+                    match.HomeTeam,
+                    match.HomeScore,
+                    match.AwayTeam,
+                    match.AwayScore,
+                    match.PenaltyWinner,
+                    match.City,
+                    match.Country))
+                .ToListAsync(cancellationToken);
+        }
+
+        return Ok(new WorldCupMatchesPageDto(page, pageSize, totalCount, pageMatches));
     }
 }

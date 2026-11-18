@@ -7,8 +7,33 @@
 
 <form method="get" asp-controller="WorldCup" asp-action="Index" class="row g-2 align-items-end mb-3">
     <div class="col-auto">
-        <label class="form-label" for="year">Year</label>
-        <input class="form-control" type="number" id="year" name="year" value="@Model.Year" min="1930" />
+        <label asp-for="Year" class="form-label">World Cup</label>
+        <select asp-for="Year" class="form-select" id="year">
+            <option value="">All World Cups</option>
+            <option value="2026">2026 World Cup</option>
+            <option value="2022">2022 World Cup</option>
+            <option value="2018">2018 World Cup</option>
+            <option value="2014">2014 World Cup</option>
+            <option value="2010">2010 World Cup</option>
+            <option value="2006">2006 World Cup</option>
+            <option value="2002">2002 World Cup</option>
+            <option value="1998">1998 World Cup</option>
+            <option value="1994">1994 World Cup</option>
+            <option value="1990">1990 World Cup</option>
+            <option value="1986">1986 World Cup</option>
+            <option value="1982">1982 World Cup</option>
+            <option value="1978">1978 World Cup</option>
+            <option value="1974">1974 World Cup</option>
+            <option value="1970">1970 World Cup</option>
+            <option value="1966">1966 World Cup</option>
+            <option value="1962">1962 World Cup</option>
+            <option value="1958">1958 World Cup</option>
+            <option value="1954">1954 World Cup</option>
+            <option value="1950">1950 World Cup</option>
+            <option value="1938">1938 World Cup</option>
+            <option value="1934">1934 World Cup</option>
+            <option value="1930">1930 World Cup</option>
+        </select>
     </div>
     <div class="col-auto">
         <label class="form-label" for="team">Team</label>
@@ -24,33 +49,105 @@
 
 @if (Model.Matches.Count == 0 && ViewData.ModelState.IsValid)
 {
-    <p>No matches found.</p>
+    <p>@(Model.TotalCount == 0 ? "No matches found." : "No matches on this page.")</p>
 }
 else if (Model.Matches.Count > 0)
 {
-    <table class="table table-striped table-sm">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Home</th>
-                <th class="text-center">Score</th>
-                <th>Away</th>
-                <th>City</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var match in Model.Matches)
-            {
-                <tr>
-                    <td>@match.Date.ToString("yyyy-MM-dd")</td>
-                    <td>@match.HomeTeam</td>
-                    <td class="text-center">@match.HomeScore - @match.AwayScore</td>
-                    <td>@match.AwayTeam</td>
-                    <td>@match.City</td>
-                    <td>@match.Country</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <p class="text-body-secondary">
+        Showing @(((long)(Model.Page - 1) * Model.PageSize) + 1)-@(((long)(Model.Page - 1) * Model.PageSize) +
+            Model.Matches.Count)
+        of @Model.TotalCount matches
+    </p>
+    @foreach (var cup in Model.Matches.GroupBy(match => match.Date.Year))
+    {
+        <section class="world-cup-cup" aria-labelledby="world-cup-@cup.Key">
+            <h2 id="world-cup-@cup.Key" class="world-cup-cup__title">@cup.Key World Cup</h2>
+            <div class="world-cup-match-list">
+                @foreach (var match in cup)
+                {
+                    var isHomePenaltyWinner = string.Equals(
+                        match.PenaltyWinner,
+                        match.HomeTeam,
+                        StringComparison.OrdinalIgnoreCase);
+                    var isAwayPenaltyWinner = string.Equals(
+                        match.PenaltyWinner,
+                        match.AwayTeam,
+                        StringComparison.OrdinalIgnoreCase);
+
+                    <article class="world-cup-match">
+                        <div class="world-cup-match__context">
+                            <time datetime="@match.Date.ToString("yyyy-MM-dd")">@match.Date.ToString("MMM d")</time>
+                            <span>@match.City, @match.Country</span>
+                        </div>
+                        <div class="world-cup-match__team world-cup-match__team--home">
+                            <span class="world-cup-match__role">Home</span>
+                            <span class="world-cup-match__name @(isHomePenaltyWinner ? "world-cup-match__name--winner" : null)"
+                                  data-team="@match.HomeTeam">
+                                @match.HomeTeam
+                            </span>
+                            @if (isHomePenaltyWinner)
+                            {
+                                <span class="world-cup-match__winner-badge">Penalties winner</span>
+                            }
+                        </div>
+                        <div class="world-cup-match__score" aria-label="Score: @match.HomeScore to @match.AwayScore">
+                            <span>@match.HomeScore</span>
+                            <span aria-hidden="true">:</span>
+                            <span>@match.AwayScore</span>
+                        </div>
+                        <div class="world-cup-match__team world-cup-match__team--away">
+                            <span class="world-cup-match__name @(isAwayPenaltyWinner ? "world-cup-match__name--winner" : null)"
+                                  data-team="@match.AwayTeam">
+                                @match.AwayTeam
+                            </span>
+                            @if (isAwayPenaltyWinner)
+                            {
+                                <span class="world-cup-match__winner-badge">Penalties winner</span>
+                            }
+                            <span class="world-cup-match__role">Away</span>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(match.PenaltyWinner))
+                        {
+                            <div class="world-cup-match__penalty-winner">
+                                Winner on penalties: <strong>@match.PenaltyWinner</strong>
+                            </div>
+                        }
+                    </article>
+                }
+            </div>
+        </section>
+    }
+}
+
+@if (Model.TotalPages > 1 || Model.Page > 1)
+{
+    <nav aria-label="World Cup match pages">
+        <ul class="pagination">
+            <li class="page-item @(Model.Page <= 1 ? "disabled" : string.Empty)">
+                @if (Model.Page > 1)
+                {
+                    <a class="page-link" asp-route-year="@Model.Year" asp-route-team="@Model.Team"
+                       asp-route-page="@(Model.Page - 1)">Previous</a>
+                }
+                else
+                {
+                    <span class="page-link" aria-disabled="true">Previous</span>
+                }
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link" aria-current="page">Page @Model.Page of @Model.TotalPages</span>
+            </li>
+            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : string.Empty)">
+                @if (Model.Page < Model.TotalPages)
+                {
+                    <a class="page-link" asp-route-year="@Model.Year" asp-route-team="@Model.Team"
+                       asp-route-page="@(Model.Page + 1)">Next</a>
+                }
+                else
+                {
+                    <span class="page-link" aria-disabled="true">Next</span>
+                }
+            </li>
+        </ul>
+    </nav>
 }
